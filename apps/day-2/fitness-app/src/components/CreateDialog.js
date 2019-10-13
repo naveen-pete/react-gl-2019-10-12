@@ -20,6 +20,11 @@ class CreateDialog extends Component {
     });
   }
 
+  handleExerciseCreate = (exercise) => {
+    this.handleToggle();
+    this.props.onExerciseCreate(exercise);
+  }
+
   render() {
     const { open } = this.state;
     const { categories } = this.props;
@@ -40,7 +45,10 @@ class CreateDialog extends Component {
             Please fill out the form below.
           </DialogContentText>
 
-          <Form categories={categories} />
+          <Form
+            categories={categories}
+            onExerciseSubmit={this.handleExerciseCreate}
+          />
 
         </DialogContent>
       </Dialog>

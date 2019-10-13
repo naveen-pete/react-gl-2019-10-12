@@ -24,7 +24,8 @@ class App extends Component {
 
   handleExerciseSelect = (exercise) => {
     this.setState({
-      exercise
+      exercise,
+      editMode: false
     });
   }
 
@@ -34,18 +35,53 @@ class App extends Component {
     });
   }
 
+  handleExerciseCreate = (exercise) => {
+    this.setState(({ exercises }) => {
+      return {
+        exercises: [
+          ...exercises,
+          exercise
+        ]
+      };
+    });
+  }
+
+  handleExerciseEdit = id => {
+    this.setState(({ exercises }) => ({
+      exercise: exercises.find(e => e.id === id),
+      editMode: true
+    }));
+  }
+
+  handleExerciseEditSubmit = exercise => {
+    this.setState(({ exercises }) => ({
+      exercises: exercises.map(e => e.id === exercise.id
+        ? { ...exercise } : { ...e }),
+      exercise,
+      editMode: false
+    }));
+  }
+
+
   render() {
-    const { categories, exercise, category } = this.state;
+    const { categories, exercise, category, editMode } = this.state;
     const exercises = this.getExercisesByCategory();
 
     return (
       <div>
-        <Header categories={categories} />
+        <Header
+          categories={categories}
+          onExerciseCreate={this.handleExerciseCreate}
+        />
         <Exercises
+          categories={categories}
           exercises={exercises}
-          onExerciseSelect={this.handleExerciseSelect}
           exercise={exercise}
           category={category}
+          editMode={editMode}
+          onExerciseSelect={this.handleExerciseSelect}
+          onExerciseEdit={this.handleExerciseEdit}
+          onExerciseEditSubmit={this.handleExerciseEditSubmit}
         />
         <Footer
           categories={categories}

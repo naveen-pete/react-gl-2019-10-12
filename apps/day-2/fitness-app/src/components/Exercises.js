@@ -5,8 +5,15 @@ import {
   List,
   ListItem,
   ListItemText,
-  Typography
+  Typography,
+  ListItemSecondaryAction,
+  IconButton
 } from '@material-ui/core';
+import {
+  Edit,
+  Delete
+} from '@material-ui/icons';
+import Form from './Form';
 
 const styles = {
   paper: {
@@ -24,7 +31,16 @@ const styles = {
   }
 };
 
-const Exercises = ({ exercises, onExerciseSelect, exercise, category }) => {
+const Exercises = ({
+  categories,
+  exercises,
+  exercise,
+  category,
+  editMode,
+  onExerciseSelect,
+  onExerciseEdit,
+  onExerciseEditSubmit
+}) => {
   const {
     title = 'Welcome!',
     description = 'Please select an exercise.'
@@ -52,6 +68,16 @@ const Exercises = ({ exercises, onExerciseSelect, exercise, category }) => {
                       onClick={() => onExerciseSelect(ex)}
                     >
                       <ListItemText primary={ex.title} />
+
+                      <ListItemSecondaryAction>
+                        <IconButton edge="end" onClick={() => onExerciseEdit(ex.id)}>
+                          <Edit />
+                        </IconButton>
+                        <IconButton edge="end">
+                          <Delete />
+                        </IconButton>
+                      </ListItemSecondaryAction>
+
                     </ListItem>
                   )}
                 </List>
@@ -63,14 +89,22 @@ const Exercises = ({ exercises, onExerciseSelect, exercise, category }) => {
       </Grid>
       <Grid item xs={12} sm={8}>
         <Paper style={styles.paper}>
-          <Fragment>
-            <Typography variant="h4">
-              {title}
-            </Typography>
-            <Typography variant="subtitle2" style={styles.subtitle}>
-              {description}
-            </Typography>
-          </Fragment>
+          {!editMode ?
+            <Fragment>
+              <Typography variant="h4">
+                {title}
+              </Typography>
+              <Typography variant="subtitle2" style={styles.subtitle}>
+                {description}
+              </Typography>
+            </Fragment>
+            :
+            <Form
+              exercise={exercise}
+              categories={categories}
+              onExerciseSubmit={onExerciseEditSubmit}
+            />
+          }
         </Paper>
       </Grid>
     </Grid>

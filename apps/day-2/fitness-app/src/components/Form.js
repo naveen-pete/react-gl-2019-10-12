@@ -15,10 +15,35 @@ const styles = {
 };
 
 class Form extends Component {
-  state = {
-    title: 'Ex 101',
-    muscles: 'arms',
-    description: 'Ex 101 desc'
+  state = this.initStateFromExercise();
+
+  initStateFromExercise() {
+    const { exercise } = this.props;
+
+    return exercise ? exercise : {
+      title: '',
+      description: '',
+      muscles: ''
+    }
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const { exercise } = props;
+    if (!exercise) {
+      return null;
+    }
+
+    const { id, title, description, muscles } = exercise;
+    if (id !== state.id) {
+      return {
+        id,
+        title,
+        description,
+        muscles
+      };
+    }
+
+    return null;
   }
 
   handleChange = name => ({ target: { value } }) =>
@@ -26,8 +51,17 @@ class Form extends Component {
       [name]: value
     });
 
+  handleClick = () => {
+    const exercise = {
+      id: this.state.title.toLowerCase().replace(/ /g, '-'),
+      ...this.state
+    };
+
+    this.props.onExerciseSubmit(exercise);
+  }
+
   render() {
-    const { categories } = this.props;
+    const { categories, exercise } = this.props;
     const { title, description, muscles } = this.state;
 
     return (
@@ -68,8 +102,9 @@ class Form extends Component {
           color="primary"
           variant="contained"
           size="small"
+          onClick={this.handleClick}
         >
-          Create
+          {exercise ? 'Edit' : 'Create'}
         </Button>
       </form>
     );
