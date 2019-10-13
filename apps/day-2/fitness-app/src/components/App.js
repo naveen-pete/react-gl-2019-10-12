@@ -40,7 +40,7 @@ class App extends Component {
 
     return (
       <div>
-        <Header />
+        <Header categories={categories} />
         <Exercises
           exercises={exercises}
           onExerciseSelect={this.handleExerciseSelect}
