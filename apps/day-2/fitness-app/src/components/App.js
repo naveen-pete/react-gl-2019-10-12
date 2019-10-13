@@ -7,7 +7,9 @@ import { categories, exercises } from '../store';
 class App extends Component {
   state = {
     categories,
-    exercises
+    exercises,
+    exercise: {},
+    category: ''
   }
 
   getExercisesByCategory = () => {
@@ -20,15 +22,36 @@ class App extends Component {
     }, {}));
   }
 
+  handleExerciseSelect = (exercise) => {
+    this.setState({
+      exercise
+    });
+  }
+
+  handleCategorySelect = (category) => {
+    this.setState({
+      category
+    });
+  }
+
   render() {
-    const { categories } = this.state;
+    const { categories, exercise, category } = this.state;
     const exercises = this.getExercisesByCategory();
 
     return (
       <div>
         <Header />
-        <Exercises exercises={exercises} />
-        <Footer categories={categories} />
+        <Exercises
+          exercises={exercises}
+          onExerciseSelect={this.handleExerciseSelect}
+          exercise={exercise}
+          category={category}
+        />
+        <Footer
+          categories={categories}
+          onCategorySelect={this.handleCategorySelect}
+          category={category}
+        />
       </div>
     );
   }

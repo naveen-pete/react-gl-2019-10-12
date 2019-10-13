@@ -1,11 +1,18 @@
 import React, { Fragment } from 'react';
-import { Grid, Paper, List, ListItem, ListItemText, Typography } from '@material-ui/core';
+import {
+  Grid,
+  Paper,
+  List,
+  ListItem,
+  ListItemText,
+  Typography
+} from '@material-ui/core';
 
 const styles = {
   paper: {
     padding: 20,
-    marginTop: 3,
-    marginBottom: 3,
+    marginTop: 5,
+    marginBottom: 5,
     height: 500,
     overflowY: 'auto'
   },
@@ -17,37 +24,53 @@ const styles = {
   }
 };
 
-const Exercises = ({ exercises }) => {
+const Exercises = ({ exercises, onExerciseSelect, exercise, category }) => {
+  const {
+    title = 'Welcome!',
+    description = 'Please select an exercise.'
+  } = exercise;
+
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} sm={6}>
-        <Paper>
+      <Grid item xs={12} sm={4}>
+        <Paper style={styles.paper}>
           {exercises.map(([cat, exercises]) => {
-            return (
-              <Fragment key={cat}>
+            let ui = null;
+            if (!category || category === cat) {
+              ui = <Fragment key={cat}>
                 <Typography
-                  variant="h6"
+                  variant="h5"
+                  style={styles.category}
                 >
                   {cat}
                 </Typography>
                 <List component="ul">
-                  {exercises.map(({ id, title }) =>
+                  {exercises.map((ex) =>
                     <ListItem
                       button
-                      key={id}
+                      key={ex.id}
+                      onClick={() => onExerciseSelect(ex)}
                     >
-                      <ListItemText primary={title} />
+                      <ListItemText primary={ex.title} />
                     </ListItem>
                   )}
                 </List>
-              </Fragment>
-            );
+              </Fragment>;
+            }
+            return ui;
           })}
         </Paper>
       </Grid>
-      <Grid item xs={12} sm={6}>
-        <Paper>
-          Right Panel
+      <Grid item xs={12} sm={8}>
+        <Paper style={styles.paper}>
+          <Fragment>
+            <Typography variant="h4">
+              {title}
+            </Typography>
+            <Typography variant="subtitle2" style={styles.subtitle}>
+              {description}
+            </Typography>
+          </Fragment>
         </Paper>
       </Grid>
     </Grid>
