@@ -10,9 +10,7 @@ const uc = {
 };
 
 const updatedCustomers = customers.map(
-  c => {
-    return c.id === uc.id ? { ...uc } : { ...c }
-  }
+  c => c.id === uc.id ? { ...uc } : { ...c }
 );
 
 console.log(customers);
