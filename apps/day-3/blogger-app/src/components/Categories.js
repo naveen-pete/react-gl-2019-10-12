@@ -9,8 +9,8 @@ const Categories = ({ categories, onCategorySelect }) => {
     <div className="list-group">
       {categoriesWithAll.map(c => {
         return <button
-          onClick={() => { onCategorySelect(c); }}
           key={c.id}
+          onClick={() => { onCategorySelect(c); }}
           type="button"
           className="list-group-item list-group-item-action">
           {c.name}

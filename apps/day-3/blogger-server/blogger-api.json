@@ -20,28 +20,49 @@
       "body": "Just kidding. It takes more than 10 minutes to learn technology.",
       "author": "thingone",
       "category": "redux"
+    },
+    {
+      "title": "p1",
+      "body": "p1 body",
+      "author": "ram",
+      "category": "react",
+      "id": 4
+    },
+    {
+      "title": "p2",
+      "body": "p2 body",
+      "author": "hari",
+      "category": "es6",
+      "id": 5
+    },
+    {
+      "title": "p3",
+      "body": "p3 body",
+      "author": "krish",
+      "category": "java",
+      "id": 6
     }
   ],
   "categories": [
     {
       "name": "React",
-      "code": "react"
+      "id": "react"
     },
     {
       "name": "Redux",
-      "code": "redux"
+      "id": "redux"
     },
     {
       "name": "Angular",
-      "code": "angular"
+      "id": "angular"
     },
     {
       "name": "ES6",
-      "code": "es6"
+      "id": "es6"
     },
     {
       "name": "Java",
-      "code": "java"
+      "id": "java"
     }
   ],
   "users": [
