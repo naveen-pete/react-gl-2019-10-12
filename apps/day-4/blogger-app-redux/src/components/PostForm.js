@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import { createPost } from '../api';
 import { getCategories } from '../api/categories';
@@ -9,17 +10,17 @@ class PostForm extends Component {
     body: '',
     author: '',
     category: '',
-    categories: []
+    // categories: []
   }
 
-  componentDidMount() {
-    getCategories()
-      .then(categories => this.setState({ categories }))
-      .catch(err => {
-        console.log('Get categories failed!');
-        console.log('Error:', err);
-      });
-  }
+  // componentDidMount() {
+  //   getCategories()
+  //     .then(categories => this.setState({ categories }))
+  //     .catch(err => {
+  //       console.log('Get categories failed!');
+  //       console.log('Error:', err);
+  //     });
+  // }
 
   handleChange = e => {
     const { name, value } = e.target;
@@ -42,7 +43,8 @@ class PostForm extends Component {
   }
 
   render() {
-    const { title, category, body, author, categories } = this.state;
+    const { title, category, body, author } = this.state;
+    const { categories } = this.props;
 
     return <div>
       <h5 className="mr-3">Post Form</h5>
@@ -120,4 +122,10 @@ class PostForm extends Component {
   }
 }
 
-export default PostForm;
+const mapStateToProps = (state) => {
+  return {
+    categories: state.categories
+  };
+};
+
+export default connect(mapStateToProps, null)(PostForm);

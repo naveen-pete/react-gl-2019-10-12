@@ -6,7 +6,9 @@ export const categories = [
   { id: 'react', name: 'React' },
   { id: 'angular', name: 'Angular' },
   { id: 'redux', name: 'Redux' },
-  { id: 'node', name: 'Node' }
+  { id: 'node', name: 'Node' },
+  { id: 'java', name: 'Java' },
+  { id: 'python', name: 'Python' }
 ]
 
 export const posts = [

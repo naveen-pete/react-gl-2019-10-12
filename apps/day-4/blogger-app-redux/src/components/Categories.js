@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import { AllCategory } from '../store';
+
 
 const Categories = ({ categories, onCategorySelect }) => {
   const categoriesWithAll = [{ ...AllCategory }, ...categories];
@@ -20,4 +23,12 @@ const Categories = ({ categories, onCategorySelect }) => {
   </div>;
 };
 
-export default Categories;
+const mapStateToProps = (state) => {
+  return {
+    categories: state.categories
+  };
+};
+
+const mapDispatchToProps = (dispatch) => { };
+
+export default connect(mapStateToProps, null)(Categories);

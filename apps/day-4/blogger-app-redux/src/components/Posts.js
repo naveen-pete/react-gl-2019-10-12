@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Categories from './Categories';
 import { AllCategory } from '../store';
-import { getPosts } from '../api';
-import { getCategories } from '../api/categories';
+import * as PostAction from '../redux/actions';
 
 class Posts extends Component {
 
@@ -12,26 +12,12 @@ class Posts extends Component {
     super();
 
     this.state = {
-      categories: [],
-      posts: [],
       category: AllCategory
     };
   }
 
   componentDidMount() {
-    getCategories()
-      .then(categories => this.setState({ categories }))
-      .catch((err) => {
-        console.log('Get categories failed.');
-        console.log('Error:', err);
-      });
-
-    getPosts()
-      .then(posts => this.setState({ posts }))
-      .catch((err) => {
-        console.log('Get posts failed.');
-        console.log('Error:', err);
-      });
+    this.props.getPosts();
   }
 
   handleCategorySelect = category => {
@@ -55,8 +41,7 @@ class Posts extends Component {
   }
 
   getCategoryName(categoryId) {
-    const { categories } = this.state;
-    const category = categories.find(c => c.id === categoryId);
+    const category = this.props.categories.find(c => c.id === categoryId);
     return category ? category.name : '';
   }
 
@@ -89,7 +74,9 @@ class Posts extends Component {
   }
 
   render() {
-    const { category, posts, categories } = this.state;
+    const { category } = this.state;
+    const { posts } = this.props;
+
 
     const filteredPosts = category.id === 'all'
       ? posts
@@ -100,7 +87,6 @@ class Posts extends Component {
     return <div className="row">
       <div className="col-12 col-md-3">
         <Categories
-          categories={categories}
           onCategorySelect={this.handleCategorySelect}
         />
       </div>
@@ -119,6 +105,19 @@ class Posts extends Component {
 
 }
 
-export default Posts;
+const mapStateToProps = (state) => {
+  return {
+    posts: state.posts,
+    categories: state.categories
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getPosts: () => dispatch(PostAction.getPosts())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);
 
 
